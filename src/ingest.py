@@ -12,7 +12,9 @@ from langchain.embeddings import OpenAIEmbeddings
 
 from dotenv import load_dotenv
 
-
+'''
+该函数从PDF文件中提取元数据，例如标题、作者和创建日期，并将其作为字典返回。
+'''
 def extract_metadata_from_pdf(file_path: str) -> dict:
     with open(file_path, "rb") as pdf_file:
         reader = PyPDF4.PdfFileReader(pdf_file)  # Change this line
@@ -112,7 +114,7 @@ if __name__ == "__main__":
     load_dotenv()
 
     # Step 1: Parse PDF
-    file_path = "src/data/april-2023.pdf"
+    file_path = "/Users/sbin/Downloads/chat-pdf-study/src/data/april-2023.pdf"
     raw_pages, metadata = parse_pdf(file_path)
 
     # Step 2: Create text chunks
@@ -128,7 +130,7 @@ if __name__ == "__main__":
     document_chunks = document_chunks[:70]
 
     # Step 3 + 4: Generate embeddings and store them in DB
-    embeddings = OpenAIEmbeddings()
+    embeddings = OpenAIEmbeddings(openai_api_key="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")
     vector_store = Chroma.from_documents(
         document_chunks,
         embeddings,
